@@ -123,7 +123,13 @@ fmt_human(uintmax_t num, int base)
 		scaled /= base;
 	}
 
-	return bprintf("%.1f %s", scaled, prefix[i]);
+	/* if less than 1K, just show zero */
+	if (num < base) {
+		scaled = 0;
+		i = 1;
+	}
+
+	return bprintf("%6.1f %s", scaled, prefix[i]);
 }
 
 int
